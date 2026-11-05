@@ -1,0 +1,22 @@
+/*
+  # Só HTTPS, por 2 anos, incluindo subdomínios
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  # Ninguém embute este site num iframe (clickjacking)
+  X-Frame-Options: DENY
+  # O navegador respeita o Content-Type declarado, não adivinha
+  X-Content-Type-Options: nosniff
+  # Não vaza a URL interna ao sair do site
+  Referrer-Policy: strict-origin-when-cross-origin
+  # O app não usa câmera, microfone nem localização
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  # Origem do conteúdo. 'unsafe-inline' em style é necessário porque o app
+  # usa atributos style="" nos componentes; script NÃO tem essa permissão.
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'
+
+/assets/*
+  # Assets são versionados por ?v= — pode cachear forte
+  Cache-Control: public, max-age=31536000, immutable
+
+/index.html
+  # O HTML aponta para a versão dos assets: nunca pode ficar velho
+  Cache-Control: no-cache

@@ -1,0 +1,1135 @@
+/* O atributo hidden precisa vencer qualquer display do app (.field é flex,
+   .sync-chip é inline-flex...). Sem esta regra, tudo que o código marcava
+   como escondido continuava na tela. */
+[hidden]{display:none!important}
+
+/* ============================================================
+   SERENA — Design System
+   Identidade própria: minimalista, premium, "SaaS 2026".
+   ============================================================ */
+
+/* A UI é neutra de propósito: a única cor forte na tela deve ser
+   o esmalte real da cliente. O berry é da marca, não do conteúdo. */
+:root{
+  /* Brand — berry de esmalte */
+  --brand-50:#fdf2f5;
+  --brand-100:#fae3ea;
+  --brand-200:#f3c3d2;
+  --brand-300:#e894af;
+  --brand-400:#d45a83;
+  --brand-500:#b31f52;   /* primary lacquer berry */
+  --brand-600:#971642;
+  --brand-700:#7a1136;
+  --brand-800:#5e0d29;
+  --brand-900:#43091d;
+  --accent:#0e9f6e;      /* verde de confirmação / dinheiro */
+  --accent-soft:#d7f5e9;
+  --accent-ink:#0c7a5a;   /* texto verde sobre fundo verde claro */
+  --warn:#c2410c;
+  --warn-soft:#ffedd5;
+  --danger:#be123c;
+  --danger-soft:#ffe4e6;
+  --gold:#a97b26;
+
+  /* Neutros quentes (light) — papel de estúdio, não cinza de dashboard */
+  --bg:#faf8f7;
+  --surface:#ffffff;
+  --surface-2:#fbf9f8;
+  --elevated:#ffffff;
+  --line:#efeae8;
+  --line-strong:#e0d9d6;
+  --ink:#1a1517;
+  --ink-2:#423a3d;
+  --muted:#7d7175;
+  --faint:#a99ea1;
+
+  /* Effects */
+  --radius:16px;
+  --radius-sm:10px;
+  --radius-lg:22px;
+  --radius-pill:999px;
+  --shadow-sm:0 1px 2px rgba(60,20,35,.05), 0 1px 3px rgba(60,20,35,.035);
+  --shadow-md:0 4px 14px rgba(60,20,35,.08), 0 1px 3px rgba(60,20,35,.05);
+  --shadow-lg:0 18px 50px rgba(60,20,35,.16), 0 6px 16px rgba(60,20,35,.08);
+  --ring:0 0 0 4px rgba(179,31,82,.16);
+
+  --sidebar-w:262px;
+  --topbar-h:64px;
+  --font:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --display:"Sora","Manrope",system-ui,sans-serif;
+}
+
+:root[data-theme="dark"]{
+  --bg:#121011;
+  --surface:#1a1719;
+  --surface-2:#201c1e;
+  --elevated:#241f22;
+  --line:#2e282b;
+  --line-strong:#3b3438;
+  --ink:#f7f3f4;
+  --ink-2:#d3c8cb;
+  --muted:#9c8f93;
+  --faint:#6b6064;
+  --brand-500:#e894af;
+  --brand-600:#d45a83;
+  --brand-50:#2a151d;
+  --brand-100:#3a1c27;
+  --accent:#34d399;
+  --accent-soft:#0c3d2c;
+  --warn-soft:#3d2310;
+  --danger-soft:#3d1620;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --shadow-md:0 6px 18px rgba(0,0,0,.45);
+  --shadow-lg:0 24px 60px rgba(0,0,0,.6);
+  --ring:0 0 0 4px rgba(128,121,251,.22);
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:var(--font);
+  background:var(--bg);
+  color:var(--ink);
+  font-size:14px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit}
+::selection{background:var(--brand-200);color:var(--ink)}
+:root[data-theme="dark"] ::selection{background:#7a1136;color:#fff}
+
+/* Scrollbars */
+*::-webkit-scrollbar{width:10px;height:10px}
+*::-webkit-scrollbar-thumb{background:var(--line-strong);border-radius:99px;border:2px solid transparent;background-clip:content-box}
+*::-webkit-scrollbar-thumb:hover{background:var(--faint)}
+
+h1,h2,h3,h4{font-family:var(--display);margin:0;letter-spacing:-.02em;color:var(--ink)}
+p{margin:0}
+
+/* Ícones: tamanho padrão global (evita SVG ocupar 100% do container) */
+svg.ic{width:18px;height:18px;flex:none;display:inline-block;vertical-align:-.18em}
+.badge svg.ic{width:13px;height:13px}
+.chip svg.ic{width:14px;height:14px}
+.var-pill svg.ic{width:12px;height:12px}
+.stat-ic svg.ic{width:17px;height:17px}
+.empty .em-ic svg.ic{width:22px;height:22px}
+.brand .logo svg.ic{width:19px;height:19px}
+.glass-feature svg.ic{width:20px;height:20px}
+.auth-visual .logo svg.ic,.auth-card .logo svg.ic{width:19px;height:19px}
+.toast svg.ic{width:17px;height:17px}
+
+/* ---------- Utilities ---------- */
+.muted{color:var(--muted)}
+.faint{color:var(--faint)}
+.small{font-size:12.5px}
+.tiny{font-size:11.5px}
+.bold{font-weight:700}
+.center{text-align:center}
+.right{text-align:right}
+.mono{font-variant-numeric:tabular-nums}
+.row{display:flex;align-items:center;gap:12px}
+.row.wrap{flex-wrap:wrap}
+.col{display:flex;flex-direction:column;gap:12px}
+.between{justify-content:space-between}
+.grow{flex:1;min-width:0}
+.gap-6{gap:6px}.gap-8{gap:8px}.gap-16{gap:16px}.gap-24{gap:24px}
+.hide{display:none!important}
+.nowrap{white-space:nowrap}
+.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.clickable{cursor:pointer}
+
+/* ---------- Buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  height:40px;padding:0 16px;border-radius:var(--radius-sm);
+  border:1px solid transparent;background:var(--surface);color:var(--ink);
+  font-weight:600;font-size:13.5px;cursor:pointer;white-space:nowrap;
+  transition:transform .06s ease, background .15s ease, box-shadow .15s ease, border-color .15s;
+}
+.btn:active{transform:translateY(1px)}
+.btn .ic{width:16px;height:16px}
+.btn-primary{background:var(--brand-500);color:#fff;box-shadow:var(--shadow-sm)}
+.btn-primary:hover{background:var(--brand-600)}
+.btn-ghost{background:transparent;border-color:var(--line-strong);color:var(--ink-2)}
+.btn-ghost:hover{background:var(--surface-2);border-color:var(--faint)}
+.btn-subtle{background:var(--surface-2);border-color:var(--line);color:var(--ink-2)}
+.btn-subtle:hover{background:var(--line)}
+.btn-danger{background:var(--danger-soft);color:var(--danger)}
+.btn-danger:hover{background:var(--danger);color:#fff}
+.btn-accent{background:var(--accent);color:#fff}
+.btn-accent:hover{filter:brightness(.95)}
+.btn-sm{height:32px;padding:0 12px;font-size:12.5px;border-radius:8px}
+.btn-icon{width:38px;height:38px;padding:0;border-radius:10px}
+.btn-icon.btn-sm{width:32px;height:32px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-block{width:100%}
+
+/* ---------- Chips / badges ---------- */
+.chip{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border-radius:var(--radius-pill);
+  font-size:12px;font-weight:600;background:var(--surface-2);color:var(--ink-2);border:1px solid var(--line)}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:var(--radius-pill);font-size:11.5px;font-weight:700;letter-spacing:.01em}
+.badge .dot{width:7px;height:7px;border-radius:50%}
+.b-green{background:var(--accent-soft);color:var(--accent-ink)}
+.b-violet{background:var(--brand-50);color:var(--brand-700)}
+.b-amber{background:var(--warn-soft);color:var(--warn)}
+.b-red{background:var(--danger-soft);color:var(--danger)}
+.b-gray{background:var(--surface-2);color:var(--muted);border:1px solid var(--line)}
+:root[data-theme="dark"] .b-violet{background:var(--brand-100);color:var(--brand-700)}
+
+/* ---------- Cards ---------- */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius)}
+.card-pad{padding:20px}
+.card-head{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.card-head h3{font-size:15px}
+
+/* ---------- Inputs ---------- */
+.field{display:flex;flex-direction:column;gap:6px}
+.field > label{font-size:12.5px;font-weight:600;color:var(--ink-2)}
+.field .hint{font-size:11.5px;color:var(--faint)}
+.input,.select,.textarea{
+  width:100%;height:42px;padding:0 12px;border-radius:var(--radius-sm);
+  border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);
+  font-size:14px;font-family:inherit;transition:border-color .15s, box-shadow .15s;
+}
+.textarea{height:auto;min-height:96px;padding:10px 12px;resize:vertical;line-height:1.55}
+.select{appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%237a7a8c' stroke-width='2'><path d='M4 6l4 4 4-4'/></svg>");background-repeat:no-repeat;background-position:right 12px center;padding-right:34px}
+.input:focus,.select:focus,.textarea:focus{outline:none;border-color:var(--brand-500);box-shadow:var(--ring)}
+.input::placeholder,.textarea::placeholder{color:var(--faint)}
+.input-group{position:relative}
+.input-group .ic-left{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--faint);width:16px;height:16px}
+.input-group .input{padding-left:36px}
+
+.switch{position:relative;width:42px;height:24px;flex:none;cursor:pointer}
+.switch input{opacity:0;width:0;height:0}
+.switch .track{position:absolute;inset:0;background:var(--line-strong);border-radius:99px;transition:.2s}
+.switch .thumb{position:absolute;top:3px;left:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:.2s;box-shadow:var(--shadow-sm)}
+.switch input:checked + .track{background:var(--brand-500)}
+.switch input:checked + .track + .thumb{transform:translateX(18px)}
+
+.seg{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:3px;gap:2px}
+.seg button{border:none;background:transparent;color:var(--muted);font-weight:600;font-size:12.5px;padding:6px 12px;border-radius:9px;cursor:pointer;transition:.15s}
+.seg button.active{background:var(--surface);color:var(--ink);box-shadow:var(--shadow-sm)}
+
+/* ---------- Tables ---------- */
+.table-wrap{overflow-x:auto}
+table.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
+.tbl th{text-align:left;font-size:12px;color:var(--muted);font-weight:600;padding:12px 14px;border-bottom:1px solid var(--line);white-space:nowrap}
+.tbl td{padding:13px 14px;border-bottom:1px solid var(--line);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tbody tr{transition:background .12s}
+.tbl tbody tr:hover{background:var(--surface-2)}
+.tbl .num{text-align:right;font-variant-numeric:tabular-nums}
+
+/* ---------- Avatar ---------- */
+.avatar{display:inline-flex;align-items:center;justify-content:center;border-radius:50%;font-weight:700;color:#fff;flex:none;font-family:var(--display);letter-spacing:0}
+.avatar.sm{width:32px;height:32px;font-size:12px}
+.avatar.md{width:40px;height:40px;font-size:14px}
+.avatar.lg{width:56px;height:56px;font-size:18px}
+
+/* ---------- App shell ---------- */
+.shell{display:grid;grid-template-columns:var(--sidebar-w) 1fr;min-height:100vh}
+.sidebar{
+  background:var(--surface);border-right:1px solid var(--line);
+  position:sticky;top:0;height:100vh;display:flex;flex-direction:column;
+  padding:16px 12px;overflow-y:auto;z-index:40;
+}
+.brand{display:flex;align-items:center;gap:10px;padding:6px 8px 14px}
+.brand .logo{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--brand-500),var(--brand-700));display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:var(--shadow-md)}
+.brand .name{font-family:var(--display);font-weight:800;font-size:18px;letter-spacing:-.03em;line-height:1.05}
+.brand .name span{color:var(--brand-500)}
+.brand-sub{font-size:12px;font-weight:500;color:var(--muted);margin-top:1px}
+
+/* ---------- Swatch de esmalte ----------
+   Quando não há foto do trabalho, a cor usada é o registro. */
+.swatch{display:inline-block;border-radius:6px;flex:none;
+  border:1px solid rgba(0,0,0,.12);box-shadow:inset 0 -6px 10px -6px rgba(0,0,0,.35)}
+.swatch.xs{width:14px;height:14px;border-radius:4px}
+.swatch.sm{width:22px;height:22px}
+.swatch.md{width:34px;height:34px;border-radius:8px}
+.swatch.lg{width:54px;height:54px;border-radius:10px}
+.swatch-ring{position:relative}
+.swatch-ring::after{content:"";position:absolute;inset:-3px;border-radius:inherit;
+  border:1px solid var(--line-strong)}
+
+/* Miniatura do trabalho: foto quando existe, swatch quando não */
+.work-thumb{width:52px;height:52px;border-radius:10px;flex:none;overflow:hidden;
+  background:var(--surface-2);border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;position:relative}
+.work-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+
+.nav-section{margin:14px 0 4px;padding:0 10px;font-size:12px;font-weight:600;color:var(--faint)}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:11px;color:var(--ink-2);font-weight:600;font-size:13.5px;cursor:pointer;transition:.13s;position:relative}
+.nav-item .ic{width:18px;height:18px;color:var(--muted);flex:none}
+.nav-item:hover{background:var(--surface-2);color:var(--ink)}
+.nav-item.active{background:var(--brand-50);color:var(--brand-700)}
+.nav-item.active .ic{color:var(--brand-600)}
+:root[data-theme="dark"] .nav-item.active{background:var(--brand-100);color:var(--brand-700)}
+.nav-item .count{margin-left:auto;font-size:11px;background:var(--surface-2);border:1px solid var(--line);color:var(--muted);padding:1px 7px;border-radius:99px;font-weight:700}
+.nav-divider{height:1px;background:var(--line);margin:10px 6px}
+
+.main{min-width:0;display:flex;flex-direction:column}
+.topbar{
+  height:var(--topbar-h);position:sticky;top:0;z-index:30;
+  background:color-mix(in srgb,var(--bg) 82%, transparent);
+  backdrop-filter:saturate(160%) blur(12px);
+  border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:14px;padding:0 24px;
+}
+.topbar .page-title{font-family:var(--display);font-weight:700;font-size:17px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+
+/* Corta no fim da linha, nunca no meio do texto */
+.clamp-2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+  overflow:hidden;line-height:1.6}
+.topbar .searchbox{max-width:340px;flex:1}
+.content{padding:24px;max-width:1360px;width:100%;margin:0 auto}
+.page-sub{color:var(--muted);font-size:13px;margin-top:2px}
+
+.mobile-only{display:none}
+.hamburger{display:none}
+
+/* Overlay drawer (mobile) */
+.scrim{position:fixed;inset:0;background:rgba(26,21,23,.4);z-index:39;backdrop-filter:blur(2px)}
+
+/* ---------- Stat cards ---------- */
+/* Os números de cada tela moram numa faixa só: divisórias de 1px (o gap
+   mostra o fundo --line) em vez de quatro cartões iguais com ícone. */
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;
+  background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.stat{background:var(--surface);padding:16px 20px 18px;position:relative;min-width:0}
+.stat .stat-ic{display:none}
+.stat .lbl{font-size:12.5px;color:var(--muted);font-weight:600;display:flex;align-items:center;gap:8px}
+.stat .val{font-family:var(--display);font-weight:700;font-size:24px;margin-top:6px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.stat .delta{font-size:12px;font-weight:600;margin-top:4px;display:inline-flex;align-items:center;gap:4px;color:var(--muted)}
+.delta.up{color:var(--accent-ink)}.delta.down{color:var(--danger)}
+
+/* ---------- Empty state ---------- */
+.empty{display:flex;flex-direction:column;align-items:center;gap:10px;padding:48px 20px;text-align:center;color:var(--muted)}
+.empty .em-ic{width:52px;height:52px;border-radius:14px;background:var(--surface-2);display:flex;align-items:center;justify-content:center;color:var(--faint)}
+
+/* ---------- Modal ---------- */
+.modal-scrim{position:fixed;inset:0;background:rgba(12,12,24,.5);backdrop-filter:blur(3px);z-index:100;display:flex;align-items:flex-start;justify-content:center;padding:6vh 16px;overflow-y:auto}
+.modal{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);width:100%;max-width:560px;animation:pop .18s ease}
+.modal.lg{max-width:820px}
+.modal.sm{max-width:420px}
+.modal-head{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.modal-head h3{font-size:16px}
+.modal-body{padding:22px}
+.modal-foot{padding:16px 22px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:10px}
+@keyframes pop{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:none}}
+
+/* ---------- Toast ---------- */
+#toast-root{position:fixed;right:20px;bottom:20px;z-index:200;display:flex;flex-direction:column;gap:10px}
+/* O status vive no disco do ícone, não numa barra lateral colorida. */
+.toast{background:var(--elevated);border:1px solid var(--line);border-radius:14px;
+  box-shadow:var(--shadow-lg);padding:12px 16px 12px 12px;min-width:260px;
+  display:flex;gap:11px;align-items:center;animation:slidein .22s ease}
+.toast .t-ic{width:28px;height:28px;flex:none;border-radius:9px;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--brand-50);color:var(--brand-600)}
+.toast.ok .t-ic{background:var(--accent-soft);color:var(--accent-ink)}
+.toast.err .t-ic{background:var(--danger-soft);color:var(--danger)}
+:root[data-theme="dark"] .toast .t-ic{background:var(--brand-100);color:var(--brand-700)}
+@keyframes slidein{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
+
+/* ---------- Forms grid ---------- */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-grid .full{grid-column:1 / -1}
+
+/* ---------- Tabs ---------- */
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:20px;overflow-x:auto}
+.tabs button{border:none;background:transparent;padding:11px 14px;font-weight:600;font-size:13.5px;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:.15s}
+.tabs button:hover{color:var(--ink)}
+.tabs button.active{color:var(--brand-600);border-bottom-color:var(--brand-500)}
+
+/* ---------- Agenda / calendar ---------- */
+.cal-toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.cal-grid{display:block;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.cal-week{display:grid;grid-template-columns:64px repeat(var(--days,7),1fr)}
+.cal-head-cell{padding:10px 8px;text-align:center;border-bottom:1px solid var(--line);border-left:1px solid var(--line);font-size:12px}
+.cal-head-cell .dow{color:var(--muted);font-weight:600;text-transform:capitalize;font-size:12px}
+.cal-head-cell .dnum{font-family:var(--display);font-weight:700;font-size:16px;margin-top:2px}
+.cal-head-cell.today .dnum{color:#fff;background:var(--brand-500);width:28px;height:28px;line-height:28px;border-radius:50%;display:inline-block;margin-top:2px}
+.cal-body{display:grid;grid-template-columns:64px repeat(var(--days,7),1fr);position:relative}
+.cal-hour-label{height:56px;font-size:11px;color:var(--faint);text-align:right;padding:2px 8px 0 0;border-top:1px solid var(--line)}
+.cal-cell{height:56px;border-top:1px solid var(--line);border-left:1px solid var(--line);position:relative;cursor:pointer;transition:background .1s}
+.cal-cell:hover{background:var(--surface-2)}
+.appt{position:absolute;z-index:2;left:3px;right:3px;border-radius:8px;padding:5px 8px;font-size:11.5px;color:#fff;overflow:hidden;cursor:pointer;box-shadow:var(--shadow-sm);border:1px solid rgba(255,255,255,.18)}
+.appt .a-cli{font-weight:700;line-height:1.2}
+.appt .a-svc{opacity:.9;font-size:10.5px}
+.appt.status-canceled{opacity:.55;text-decoration:line-through}
+
+/* Day list (mobile agenda) */
+.day-appt{display:flex;gap:12px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--surface);margin-bottom:10px}
+.day-appt .time{font-family:var(--display);font-weight:700;font-size:13px;width:52px;flex:none;color:var(--brand-600)}
+.day-appt .bar{width:4px;border-radius:4px;flex:none}
+
+/* ---------- Auth ---------- */
+.auth-wrap{min-height:100vh;display:grid;grid-template-columns:1.05fr .95fr}
+.auth-visual{background:#5e0d29;color:#fff;padding:56px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+.auth-visual > *{position:relative;z-index:1}
+.auth-form-side{display:flex;align-items:center;justify-content:center;padding:40px;background:var(--bg)}
+.auth-card{width:100%;max-width:400px}
+.glass-feature{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:16px;padding:16px;backdrop-filter:blur(8px)}
+
+/* progress bars */
+.bar-track{height:8px;border-radius:99px;background:var(--surface-2);overflow:hidden;border:1px solid var(--line)}
+.bar-fill{height:100%;border-radius:99px;background:var(--brand-500)}
+
+/* mini bar chart */
+.barchart{display:flex;align-items:flex-end;gap:10px;height:180px;padding-top:12px}
+.barchart .bar{flex:1;background:linear-gradient(180deg,var(--brand-400),var(--brand-600));border-radius:8px 8px 4px 4px;min-height:4px;position:relative;transition:.3s;cursor:default}
+.barchart .bar:hover{filter:brightness(1.08)}
+.barchart .bar .cap{position:absolute;bottom:-22px;left:0;right:0;text-align:center;font-size:10.5px;color:var(--muted)}
+.barchart .bar .val{position:absolute;top:-20px;left:0;right:0;text-align:center;font-size:10.5px;font-weight:700;color:var(--ink-2);opacity:0;transition:.2s}
+.barchart .bar:hover .val{opacity:1}
+
+.donut{--p:0;width:132px;height:132px;border-radius:50%;
+  background:conic-gradient(var(--brand-500) calc(var(--p)*1%), var(--surface-2) 0);
+  display:flex;align-items:center;justify-content:center;position:relative}
+.donut::before{content:"";position:absolute;inset:16px;border-radius:50%;background:var(--surface)}
+.donut .dc{position:relative;text-align:center}
+
+/* list rows */
+.lrow{display:flex;align-items:center;gap:14px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.lrow:last-child{border-bottom:none}
+.lrow:hover{background:var(--surface-2)}
+
+/* segmented pills for variables */
+.var-pill{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:8px;background:var(--brand-50);color:var(--brand-700);border:1px solid var(--brand-100);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)}
+.var-pill:hover{background:var(--brand-100)}
+:root[data-theme="dark"] .var-pill{background:var(--brand-100);border-color:var(--brand-200);color:var(--brand-700)}
+
+/* whatsapp preview bubble */
+.wa-preview{background:#e6f7d9;border-radius:14px;padding:14px 16px;color:#1a2e1a;font-size:13.5px;line-height:1.5;box-shadow:var(--shadow-sm);position:relative;white-space:pre-wrap;word-break:break-word}
+:root[data-theme="dark"] .wa-preview{background:#12331f;color:#dcefdc}
+.wa-shell{background:#0e1621;border-radius:20px;padding:16px;background-image:linear-gradient(rgba(0,0,0,.15),rgba(0,0,0,.15))}
+
+/* ---------- Portal da Cliente (#cliente) ----------
+   Painel separado, pensado para o celular: a cliente chega pelo link
+   da bio do Instagram. No desktop a coluna fica centrada. */
+.portal{min-height:100vh;background:var(--bg);display:flex;flex-direction:column;align-items:center}
+.portal-head{
+  width:100%;color:#fff;padding:16px 18px 20px;
+  background:#5e0d29;   /* fixo: --brand-800 vira rosa claro no tema escuro */
+  padding-top:calc(16px + env(safe-area-inset-top));
+}
+.portal-head-inner{max-width:560px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.portal-logo{width:34px;height:34px;border-radius:10px;flex:none;
+  background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center}
+.portal-brand{font-family:var(--display);font-weight:800;font-size:16px;letter-spacing:-.02em}
+.portal-tag{font-size:12px;opacity:.8}
+.portal-out{background:rgba(255,255,255,.16);border:none;color:#fff}
+.portal-out:hover{background:rgba(255,255,255,.28)}
+.portal-hello{max-width:560px;margin:16px auto 0;display:flex;align-items:center;gap:12px}
+.portal-hello-sm{font-size:12.5px;opacity:.85}
+.portal-hello-name{font-family:var(--display);font-weight:800;font-size:20px;line-height:1.15}
+.portal-body{
+  width:100%;max-width:560px;margin:-14px auto 0;
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:18px 18px 0 0;min-height:60vh;overflow:hidden;
+  box-shadow:var(--shadow-md);
+}
+@media (min-width:640px){
+  .portal-body{border-radius:18px;margin:-14px auto 32px}
+}
+
+/* ---------- Tira de trabalhos anteriores (portal da cliente) ----------
+   Rola na horizontal: o histórico visual dela sem empurrar a página. */
+.work-strip{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.work-strip::-webkit-scrollbar{display:none}
+.work-item{display:flex;flex-direction:column;align-items:center;gap:4px;
+  width:64px;flex:none;text-align:center}
+.work-item .swatch{width:64px;height:64px;border-radius:12px}
+/* O nome do esmalte é maior que o swatch: precisa de largura própria
+   para o truncate agir, senão o texto sangra sobre os vizinhos. */
+.work-item > span{max-width:64px;width:100%}
+
+/* ---------- Calendário de agendamento (portal da cliente) ---------- */
+.cal{border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:12px;overflow:hidden}
+.cal-nav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.cal-title{font-family:var(--display);font-weight:700;font-size:14.5px}
+.cal-dows{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:6px}
+.cal-dows span{text-align:center;font-size:11.5px;font-weight:600;
+  text-transform:capitalize;color:var(--faint)}
+.cal-days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+
+.cal-day{
+  position:relative;aspect-ratio:1;min-height:38px;width:100%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  border:1px solid transparent;border-radius:10px;cursor:pointer;
+  background:var(--surface-2);color:var(--ink);font-family:inherit;
+  font-size:13.5px;font-weight:600;transition:background .12s,border-color .12s;
+}
+.cal-day:hover:not(:disabled){background:var(--brand-50);border-color:var(--brand-200)}
+.cal-day:focus-visible{outline:2px solid var(--brand-500);outline-offset:2px}
+/* Sem vaga: continua legível, mas claramente fora de alcance. */
+.cal-day.off{background:transparent;color:var(--faint);cursor:not-allowed;font-weight:500}
+.cal-day.hoje{border-color:var(--line-strong)}
+.cal-day.sel{background:var(--brand-500);border-color:var(--brand-500);color:#fff;font-weight:700}
+.cal-day.sel .dot-livre{background:#fff}
+
+/* O ponto repete a informação que a cor já dá, para não depender só dela. */
+.dot-livre,.dot-cheio{display:inline-block;width:4px;height:4px;border-radius:50%}
+.dot-livre{background:var(--accent)}
+.dot-cheio{background:var(--line-strong)}
+.cal-legend{display:flex;gap:14px;margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
+.cal-legend span{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)}
+
+@media (pointer:coarse){ .cal-day{min-height:44px} }
+
+/* ---------- Gráfico Receita × Despesa ----------
+   Rola na horizontal quando o período tem muitas colunas, em vez de
+   espremer as barras até virarem fios. */
+.rd-chart{display:flex;align-items:flex-end;gap:14px;height:200px;
+  overflow-x:auto;padding-bottom:26px;scrollbar-width:thin}
+.rd-col{flex:1 0 44px;height:100%;display:flex;flex-direction:column;
+  justify-content:flex-end;position:relative;min-width:44px}
+.rd-bars{display:flex;align-items:flex-end;gap:4px;height:100%}
+.rd-rev,.rd-exp{flex:1;border-radius:6px 6px 0 0;min-height:2px}
+/* Verde entra, vermelho sai — as mesmas cores dos cartões acima.
+   O berry da marca é vizinho do vermelho: lado a lado as barras
+   ficavam indistinguíveis. */
+.rd-rev{background:var(--accent)}
+.rd-exp{background:var(--danger);opacity:.9}
+.rd-cap{position:absolute;bottom:-22px;left:0;right:0;text-align:center;
+  font-size:11px;color:var(--muted);white-space:nowrap}
+.lg-dot{width:10px;height:10px;border-radius:3px;display:inline-block}
+
+/* Números compactos dentro de um card, sem virar mais um bloco de stat */
+.mini-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:16px}
+
+.divider{height:1px;background:var(--line);margin:16px 0}
+
+/* Datas em pt-BR: só a primeira letra sobe. `capitalize` produziria
+   "30 De Ago. De 2026" — errado em português. */
+.cap-first{text-transform:lowercase}
+.cap-first::first-letter{text-transform:uppercase}
+
+/* Sem flash cinza ao tocar em controles no mobile */
+button,.nav-item,.lrow,.clickable,.var-pill{-webkit-tap-highlight-color:transparent}
+
+/* Status compacto: no mobile o rótulo vira um ponto colorido */
+.dot-sm{display:none;width:9px;height:9px;border-radius:50%;flex:none;background:currentColor}
+@media (max-width:640px){
+  .hide-sm{display:none!important}
+  .dot-sm{display:block}
+}
+
+/* skeleton */
+.skel{background:linear-gradient(90deg,var(--surface-2),var(--line),var(--surface-2));background-size:200% 100%;animation:shimmer 1.2s infinite;border-radius:8px}
+@keyframes shimmer{to{background-position:-200% 0}}
+
+/* dropdown menu */
+.menu{position:absolute;background:var(--elevated);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow-lg);padding:6px;min-width:180px;z-index:90}
+.menu button{display:flex;align-items:center;gap:9px;width:100%;text-align:left;border:none;background:transparent;padding:9px 10px;border-radius:8px;font-size:13px;color:var(--ink-2);cursor:pointer;font-weight:500}
+.menu button:hover{background:var(--surface-2);color:var(--ink)}
+.menu button.danger{color:var(--danger)}
+.menu button.danger:hover{background:var(--danger-soft)}
+.menu .sep{height:1px;background:var(--line);margin:5px 2px}
+
+/* filter bar */
+.filterbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+
+/* ============================================================
+   Layout safety — impede overflow horizontal da página.
+   Itens de grid/flex têm min-width:auto por padrão, o que os
+   impede de encolher abaixo do conteúdo e quebra o scroll
+   interno das tabelas. Aqui normalizamos isso.
+   ============================================================ */
+.shell,.main,.content{min-width:0}
+.stat-grid > *,.dash-grid > *,.g-2 > *,.g-3 > *,.auto-grid > *,.msg-grid > *{min-width:0}
+.card,.stat,.table-wrap{min-width:0}
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.lrow > .grow,.row > .grow{min-width:0}
+
+/* Grids responsivos reutilizáveis (antes viviam em <style> inline nas views).
+   A proporção das colunas vem de --cols, então o breakpoint sobrescreve
+   sem precisar de !important. */
+.dash-grid{display:grid;gap:22px;grid-template-columns:var(--cols,1fr 1fr)}
+.g-2{display:grid;gap:16px;grid-template-columns:1fr 1fr}
+.g-3{display:grid;gap:16px;grid-template-columns:repeat(3,1fr)}
+.auto-grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
+.msg-grid{display:grid;gap:20px;align-items:start;grid-template-columns:1.15fr .85fr}
+.msg-side{position:sticky;top:88px}
+.stat-grid-4{grid-template-columns:repeat(4,1fr)}
+@media (max-width:980px){ .msg-grid{grid-template-columns:1fr} .msg-side{position:static} }
+@media (max-width:760px){ .stat-grid-4{grid-template-columns:1fr 1fr} }
+@media (max-width:900px){ .dash-grid{grid-template-columns:1fr} .g-3{grid-template-columns:1fr 1fr} }
+@media (max-width:640px){ .g-2,.g-3{grid-template-columns:1fr} }
+
+/* Trilhos roláveis não devem estourar a viewport */
+.seg,.tabs{max-width:100%;overflow-x:auto;scrollbar-width:none}
+.seg::-webkit-scrollbar,.tabs::-webkit-scrollbar{display:none}
+.seg button{flex:none}
+
+/* responsive */
+@media (max-width:1024px){
+  :root{--sidebar-w:0px}
+  .shell{grid-template-columns:1fr}
+  .sidebar{position:fixed;left:0;top:0;width:270px;transform:translateX(-100%);transition:transform .25s ease;box-shadow:var(--shadow-lg)}
+  .sidebar.open{transform:none}
+  .hamburger{display:inline-flex}
+  .auth-wrap{grid-template-columns:1fr}
+  .auth-visual{display:none}
+}
+@media (max-width:640px){
+  .content{padding:16px 16px calc(var(--bottomnav-h) + 20px)}
+  .topbar{padding:0 14px}
+  .form-grid{grid-template-columns:1fr}
+  .desktop-only{display:none!important}
+  .mobile-only{display:block}
+  .modal{border-radius:20px 20px 0 0;position:fixed;bottom:0;left:0;right:0;max-width:none;
+    max-height:92vh;overflow-y:auto;animation:sheet .24s cubic-bezier(.32,.72,0,1);
+    padding-bottom:env(safe-area-inset-bottom)}
+  .modal-scrim{padding:0;align-items:flex-end}
+  @keyframes sheet{from{transform:translateY(100%)}to{transform:none}}
+  /* alça de arraste do bottom-sheet */
+  .modal-head{position:sticky;top:0;background:var(--surface);z-index:2;border-radius:20px 20px 0 0}
+  .modal-head::before{content:"";position:absolute;top:7px;left:50%;transform:translateX(-50%);
+    width:38px;height:4px;border-radius:99px;background:var(--line-strong)}
+  .modal-foot{position:sticky;bottom:0;background:var(--surface)}
+  .modal-foot .btn{flex:1}
+
+  /* densidade: 2 cartões por linha em vez de 1 */
+  .stat-grid{grid-template-columns:1fr 1fr}
+  .stat{padding:13px 14px}
+  .stat .val{font-size:19px;margin-top:6px}
+  .stat .lbl{font-size:11.5px}
+  .stat .delta{font-size:11px;margin-top:4px}
+  .stat .stat-ic{display:none}
+
+  /* A ação principal da agenda ganha uma linha própria e vira alvo largo */
+  .agenda-actions{width:100%;flex-wrap:wrap}
+  .agenda-actions #new-appt{flex:1 0 100%}
+
+  .card-head{padding:14px 16px;flex-wrap:wrap}
+  .card-pad{padding:16px}
+  .lrow{padding:12px 14px}
+  h1{font-size:21px!important}
+}
+
+/* Alvos de toque confortáveis em telas sensíveis ao toque (WCAG 2.5.8) */
+@media (pointer:coarse){
+  .btn{min-height:44px}
+  .btn-sm{min-height:38px}
+  .btn-icon{width:44px;height:44px}
+  .btn-icon.btn-sm{width:38px;height:38px}
+  .nav-item{padding:12px 10px}
+  .seg button{padding:10px 14px}
+  .tabs button{padding:13px 14px}
+  .var-pill{padding:8px 12px}
+  .input,.select{height:46px}
+}
+
+/* ---------- Barra de navegação inferior (mobile) ---------- */
+:root{--bottomnav-h:0px}
+.bottomnav{display:none}
+@media (max-width:640px){
+  :root{--bottomnav-h:62px}
+  .bottomnav{
+    display:grid;grid-template-columns:repeat(5,1fr);
+    position:fixed;left:0;right:0;bottom:0;z-index:45;
+    height:calc(var(--bottomnav-h) + env(safe-area-inset-bottom));
+    padding-bottom:env(safe-area-inset-bottom);
+    background:color-mix(in srgb,var(--surface) 92%, transparent);
+    backdrop-filter:saturate(180%) blur(14px);
+    border-top:1px solid var(--line);
+  }
+  .bottomnav button{
+    border:none;background:transparent;cursor:pointer;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+    font-size:10px;font-weight:600;color:var(--muted);padding:0;position:relative;
+    transition:color .15s;
+  }
+  .bottomnav button svg.ic{width:21px;height:21px}
+  .bottomnav button.active{color:var(--brand-500)}
+  .bottomnav button.active::before{
+    content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);
+    width:26px;height:3px;border-radius:0 0 4px 4px;background:var(--brand-500);
+  }
+  .bottomnav .bn-count{
+    position:absolute;top:6px;right:calc(50% - 20px);min-width:16px;height:16px;
+    border-radius:99px;background:var(--danger);color:#fff;font-size:9.5px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;padding:0 4px;
+  }
+  #toast-root{bottom:calc(var(--bottomnav-h) + 14px);left:14px;right:14px}
+  .toast{min-width:0}
+}
+
+/* ===== Disponibilidade: expediente por dia ===================== */
+.input-sm{padding:7px 9px;font-size:13px;min-width:0}
+.btn-warn{background:var(--warn-soft);color:var(--warn);border-color:transparent}
+.btn-warn:hover{background:var(--warn);color:#fff}
+
+.hr-day{display:grid;grid-template-columns:minmax(0,150px) minmax(0,1fr);gap:12px;align-items:center;
+  padding:10px 12px;border:1px solid var(--line);border-radius:12px}
+.hr-day-head{display:flex;align-items:center;gap:10px;cursor:pointer;min-width:0}
+.hr-times{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;min-width:0}
+.hr-pair{display:flex;align-items:center;gap:6px;min-width:0}
+.hr-pair .input{flex:1;min-width:0}
+/* Dia desligado continua visível, mas sem convidar a digitar */
+.hr-day.off .hr-times{opacity:.35;pointer-events:none}
+
+@media (max-width:720px){
+  .hr-day{grid-template-columns:minmax(0,1fr);gap:10px}
+  .hr-times{grid-template-columns:minmax(0,1fr)}
+}
+
+/* ===== Solicitações ============================================ */
+.sol-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr))}
+.sol-card{display:flex;flex-direction:column;gap:12px}
+/* A borda é o aviso: o que está perto de acontecer salta da grade */
+.sol-card.urgente{border-color:var(--warn);box-shadow:0 0 0 3px var(--warn-soft)}
+.sol-quando{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink);
+  background:var(--surface-2);padding:10px 12px;border-radius:10px}
+.sol-quando svg{flex:none;width:16px;height:16px;color:var(--brand-600)}
+.sol-alerta{display:flex;align-items:flex-start;gap:8px;font-size:12.5px;line-height:1.45;
+  color:var(--danger);background:var(--danger-soft);padding:10px 12px;border-radius:10px}
+.sol-alerta svg{flex:none;width:15px;height:15px;margin-top:1px}
+.sol-acoes{margin-top:auto}
+.sol-acoes .grow{flex:1;min-width:0}
+
+/* ===== Notificações ============================================ */
+.notif-dot{position:absolute;top:7px;right:8px;width:7px;height:7px;
+  background:var(--danger);border-radius:50%}
+.notif-item{display:flex;align-items:center;gap:10px;width:100%;padding:8px;
+  border:0;background:none;border-radius:10px;cursor:pointer;color:inherit;text-align:left}
+.notif-item:hover{background:var(--surface-2)}
+.notif-item > svg:last-child{margin-left:auto;flex:none;width:15px;height:15px;color:var(--muted)}
+
+/* ===== Estado da sincronização ================================= */
+.sync-chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;
+  font-size:11.5px;font-weight:700;letter-spacing:.01em;white-space:nowrap;cursor:default}
+.sync-chip::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;flex:none}
+.sync-chip.ok{background:var(--accent-soft);color:var(--accent)}
+.sync-chip.indo{background:var(--warn-soft);color:var(--warn)}
+.sync-chip.erro{background:var(--danger-soft);color:var(--danger)}
+/* No celular o espaço do cabeçalho é curto: fica só a bolinha */
+@media (max-width:640px){
+  .sync-chip{font-size:0;padding:0;width:10px;height:10px;border-radius:50%;
+    background:transparent!important}
+  .sync-chip::before{width:10px;height:10px}
+}
+
+/* ===== Agenda: visão de mês ===================================== */
+.mes-dows{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;margin-bottom:8px}
+.mes-dows span{text-align:center;font-size:12px;font-weight:600;color:var(--muted);
+  text-transform:capitalize}
+.mes-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.mes-vazio{min-height:74px}
+
+.mes-dia{position:relative;min-height:74px;min-width:0;display:flex;flex-direction:column;
+  align-items:flex-start;gap:4px;padding:7px 8px;border:1px solid var(--line);border-radius:10px;
+  background:var(--surface);cursor:pointer;text-align:left;color:inherit;font:inherit}
+.mes-dia:hover{border-color:var(--brand-400);background:var(--brand-50)}
+/* Dia fechado fica no fundo, sem sumir: ela precisa ver que é folga */
+.mes-dia.fechado{background:var(--surface-2);border-style:dashed;opacity:.6}
+.mes-dia.hoje{border-color:var(--brand-500);box-shadow:inset 0 0 0 1px var(--brand-500)}
+.mes-num{font-family:var(--display);font-weight:700;font-size:13px}
+.mes-dia.hoje .mes-num{color:var(--brand-600)}
+.mes-bloq{position:absolute;top:6px;right:8px;color:var(--warn);font-size:16px;line-height:1}
+
+.mes-pontos{display:flex;flex-wrap:wrap;align-items:center;gap:3px;min-width:0}
+.mes-pontos i{width:6px;height:6px;border-radius:50%;flex:none}
+.mes-pontos i.c{background:var(--accent)}
+.mes-pontos i.s{background:var(--brand-500)}
+.mes-pontos i.f{background:var(--muted)}
+.mes-pontos em{font-style:normal;font-size:10px;font-weight:700;color:var(--muted)}
+.mes-valor{margin-top:auto;font-size:10.5px;font-weight:700;color:var(--accent);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
+
+.mes-legenda{display:flex;flex-wrap:wrap;gap:14px;margin-top:12px;padding-top:12px;
+  border-top:1px solid var(--line);font-size:11.5px;color:var(--muted)}
+.mes-legenda span{display:inline-flex;align-items:center;gap:6px}
+.mes-legenda i{width:7px;height:7px;border-radius:50%}
+
+@media (max-width:640px){
+  .mes-grid{gap:4px}
+  .mes-dia{min-height:56px;padding:5px;gap:3px}
+  .mes-vazio{min-height:56px}
+  .mes-valor{display:none}          /* no celular o número não cabe legível */
+  .mes-num{font-size:12px}
+}
+
+/* ===== Agenda: grade da semana ================================== */
+/* A grade é cabeçalho + corpo empilhados. Antes era uma grid de duas
+   colunas (64px + resto): o cabeçalho caía na coluna de 64px e
+   transbordava por cima das células, roubando os cliques. */
+.cal-week,.cal-body{min-width:0}
+.cal-gutter{border-left:none!important}
+.cal-head-cell.fechado .dow,.cal-head-cell.fechado .dnum{opacity:.45}
+.cal-cell.off{background:repeating-linear-gradient(135deg,transparent 0 6px,color-mix(in srgb,var(--line) 55%,transparent) 6px 7px)}
+.cal-cell.off:hover{background-color:var(--surface-2)}
+
+/* A cor do cartão diz a situação — ela trabalha sozinha, então a cor da
+   profissional (a mesma em tudo) não informava nada. */
+.appt.st-scheduled{background:color-mix(in srgb,var(--brand-500) 16%,var(--surface));color:var(--ink);
+  border:1px dashed var(--brand-500);box-shadow:none}
+.appt.st-confirmed{background:var(--brand-500);color:#fff}
+.appt.st-done{background:color-mix(in srgb,var(--muted) 24%,var(--surface));color:var(--ink);border-color:var(--line)}
+.appt.st-no_show{background:var(--warn-soft);color:var(--warn);border-color:var(--warn)}
+.appt:focus-visible{outline:2px solid var(--ring,var(--brand-500));outline-offset:1px}
+.appt:hover{filter:brightness(1.05);z-index:3}
+
+.cal-block{position:absolute;z-index:1;left:2px;right:2px;border-radius:7px;padding:4px 7px;
+  font-size:10.5px;font-weight:700;color:var(--muted);cursor:help;overflow:hidden;
+  background:repeating-linear-gradient(135deg,var(--surface-2) 0 6px,color-mix(in srgb,var(--line-strong) 60%,transparent) 6px 8px);
+  border:1px solid var(--line-strong)}
+.cal-agora{position:absolute;z-index:4;left:-1px;right:0;height:2px;background:var(--danger);pointer-events:none}
+.cal-agora::before{content:"";position:absolute;left:-4px;top:-3px;width:8px;height:8px;border-radius:50%;background:var(--danger)}
+
+/* Lista do dia: barrinha pela situação, bloqueio listrado, cancelado apagado */
+.day-appt .bar{background:var(--brand-500)}
+.day-appt.st-scheduled .bar{background:transparent;border:2px dashed var(--brand-500)}
+.day-appt.st-done .bar{background:var(--muted)}
+.day-appt.st-no_show .bar{background:var(--warn)}
+.day-appt.st-canceled{opacity:.5}
+.day-appt.st-canceled .bar{background:var(--line-strong)}
+.day-block .bar{background:repeating-linear-gradient(180deg,var(--line-strong) 0 4px,transparent 4px 8px)}
+.day-block{cursor:default}
+
+/* ===== Tema escuro: tons da marca que faltavam ===================
+   O escuro só redefinia 50/100/500/600/700. Texto em brand-800 sobre
+   brand-50 (cartão do próximo horário no portal) ficava escuro sobre
+   escuro, ilegível. */
+:root[data-theme="dark"]{
+  --brand-200:#5a2a3b; --brand-300:#7d3550; --brand-400:#a8466b;
+  --brand-800:#f4c4d3; --brand-900:#fde4ec;
+  /* brand-700 é quase sempre texto sobre brand-50: sem esta linha ficava
+     vinho-escuro sobre fundo escuro (aba ativa do portal, total da comanda) */
+  --brand-700:#f0a3bf; --accent-ink:#6ee7b7;
+}
+
+/* ===== Seletor de cor do esmalte ================================
+   Cartela como a da bancada: unhas pintadas, agrupadas por família,
+   do tom mais claro ao mais escuro. No topo, a cor escolhida em tamanho
+   grande, para ela conferir antes de salvar. */
+.cs{display:flex;flex-direction:column;gap:16px}
+.cs-topo{display:flex;align-items:center;gap:16px;padding:14px 16px;border-radius:14px;background:var(--surface-2);border:1px solid var(--line)}
+.cs-previa{width:44px;height:60px;transition:background-color .2s}
+.cs-escolha{display:flex;flex-direction:column;gap:8px;min-width:0}
+.cs-nome{font-family:var(--display);font-weight:700;font-size:17px;letter-spacing:-.01em}
+.cs-repetir,.cs-limpar{display:inline-flex;align-items:center;gap:8px;min-height:30px;padding:5px 12px;border-radius:99px;text-align:left;
+  border:1px solid var(--line-strong);background:var(--surface);color:var(--ink-2);font:inherit;font-size:12.5px;cursor:pointer}
+.cs-repetir .unha{width:12px;height:16px}
+.cs-repetir:hover,.cs-limpar:hover{border-color:var(--brand-400);color:var(--ink)}
+.cs-limpar{color:var(--muted)}
+.cs-busca .input{height:38px}
+.cs-grupos{display:flex;flex-direction:column;gap:14px}
+.cs-grupo-t{font-size:12.5px;font-weight:600;color:var(--muted);margin-bottom:6px}
+.cs-cartela{display:grid;grid-template-columns:repeat(auto-fill,minmax(74px,1fr));gap:4px}
+.cs-op{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 4px 8px;min-width:0;
+  border:1px solid transparent;border-radius:12px;background:none;font:inherit;color:var(--ink-2);cursor:pointer;
+  transition:background-color .12s,border-color .12s}
+.cs-op .unha{width:26px;height:36px;transition:transform .15s}
+.cs-op:hover{background:var(--surface-2)}
+.cs-op:hover .unha{transform:translateY(-2px)}
+.cs-op-nome{font-size:11.5px;line-height:1.25;text-align:center;max-width:100%;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cs-op.sel{background:var(--brand-50);border-color:var(--brand-500);color:var(--ink);font-weight:700}
+.cs-op:focus-visible{outline:2px solid var(--brand-500);outline-offset:1px}
+.cs-nada{padding:8px 2px}
+.cs-rodape{display:flex;justify-content:flex-start}
+.cs-nova{display:flex;align-items:flex-start;gap:12px;padding:14px;border-radius:14px;border:1px dashed var(--line-strong)}
+.cs-nova-cor{position:relative;cursor:pointer;flex:none;padding:2px}
+.cs-nova-cor .unha{width:34px;height:46px}
+.cs-nova-cor input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}
+.cs-nova-cor:focus-within .unha{outline:2px solid var(--brand-500);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){ .cs-op .unha,.cs-previa{transition:none} }
+@media (max-width:640px){
+  .cs-cartela{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
+  .cs-nova{flex-wrap:wrap}
+  .cs-nova #cor-ok{width:100%}
+}
+
+/* Cor de identificação da profissional */
+.pp{display:flex;flex-wrap:wrap;gap:10px}
+.pp-op{position:relative;width:34px;height:34px;border-radius:50%;border:none;cursor:pointer;flex:none;
+  background:var(--c,var(--surface-2));box-shadow:inset 0 0 0 1px rgba(0,0,0,.12);
+  display:grid;place-items:center;color:var(--muted)}
+.pp-op.sel{box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--c,var(--brand-500))}
+.pp-op:focus-visible{outline:2px solid var(--brand-500);outline-offset:4px}
+.pp-livre{border:1.5px dashed var(--line-strong);box-shadow:none}
+.pp-livre.sel{border:none}
+.pp-livre svg{width:15px;height:15px}
+.pp-livre input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}
+.pp-livre:focus-within{outline:2px solid var(--brand-500);outline-offset:4px}
+
+/* ===== Comanda ================================================== */
+.oc-total{font-family:var(--display);font-weight:800;font-size:24px;color:var(--brand-700)}
+.oc-pacote{display:flex;gap:12px;align-items:center;padding:12px;border:1px solid var(--accent);
+  border-radius:12px;background:var(--accent-soft);cursor:pointer;margin-bottom:8px}
+
+/* ===== Ficha: cores e pacotes =================================== */
+.cd-cores{display:flex;flex-direction:column;gap:8px;padding:12px;border-radius:12px;background:var(--surface-2)}
+.cd-cor{display:inline-flex;align-items:center;gap:6px;font-size:12.5px}
+.cd-cor em{font-style:normal;color:var(--muted);font-size:11px}
+.cd-pacotes{display:flex;flex-wrap:wrap;gap:6px}
+
+/* ===== Mensagens: modelo que precisa de horário ================= */
+.msg-off{opacity:.55}
+
+/* ===== Impressão do recibo ======================================
+   window.print() imprimia a tela inteira do sistema. Com a classe,
+   só o conteúdo do modal sai no papel. */
+@media print{
+  body.imprimindo-recibo > *:not(#modal-root){display:none!important}
+  body.imprimindo-recibo #modal-root .modal-scrim{position:static;background:none;padding:0}
+  body.imprimindo-recibo #modal-root .modal{box-shadow:none;border:none;max-width:none;width:auto}
+  body.imprimindo-recibo #modal-root .modal-head,
+  body.imprimindo-recibo #modal-root .modal-foot{display:none!important}
+  body.imprimindo-recibo{background:#fff;color:#000}
+}
+
+/* ===== Primeiros passos (painel do dia 1) ====================== */
+.passos{border-color:var(--brand-200)}
+.passos-barra{height:6px;border-radius:99px;background:var(--line);overflow:hidden}
+.passos-barra i{display:block;height:100%;width:100%;background:var(--brand-500);border-radius:99px;transform-origin:left;transition:transform .3s cubic-bezier(.16,1,.3,1)}
+.passo{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;padding:10px 12px;
+  border:1px solid var(--line);border-radius:12px;background:var(--surface);cursor:pointer;color:var(--ink);font:inherit}
+.passo:hover{border-color:var(--brand-400)}
+.passo-ic{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+  background:var(--brand-50);color:var(--brand-600)}
+.passo-ic svg{width:14px;height:14px}
+.passo.feito{opacity:.62}
+.passo.feito .passo-ic{background:var(--accent);color:#fff}
+.passo.feito .bold{text-decoration:line-through;text-decoration-color:var(--muted)}
+
+/* ===== Comanda: linha do item no celular =======================
+   Selo + nome + quantidade + valor + lixeira não cabem em 375px: o nome
+   do serviço era espremido até sumir. No celular o nome ganha a linha. */
+.oc-item{flex-wrap:wrap}
+@media (max-width:640px){
+  .oc-item .grow{flex-basis:calc(100% - 90px)}
+  .oc-item [data-qty]{margin-left:auto}
+}
+
+/* ===== Hoje: a abertura do painel ===============================
+   A única coisa ousada da tela. O dia dela aparece como uma fileira de
+   unhas pintadas: o esmalte combinado para o horário ou, se ainda não
+   há, o da última visita da cliente. O resto da interface fica neutro
+   para essas cores serem as únicas fortes. */
+.hoje{display:flex;flex-direction:column;gap:18px}
+.hoje-topo{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.hoje-data{font-family:var(--display);font-weight:700;font-size:30px;letter-spacing:-.03em;line-height:1.1}
+.hoje-topo .page-sub{font-size:14px;margin-top:6px}
+.hoje-acoes{display:flex;gap:8px;flex-wrap:wrap}
+
+.fila{list-style:none;margin:0;padding:0;display:grid;gap:10px;
+  grid-template-columns:repeat(auto-fill,minmax(148px,1fr))}
+.fila > li{min-width:0}
+.fila-item{width:100%;height:100%;display:grid;grid-template-columns:auto minmax(0,1fr);
+  grid-template-areas:"unha hora" "unha nome" "serv serv" "cor cor";
+  column-gap:12px;row-gap:1px;align-items:center;text-align:left;
+  padding:14px 14px 12px;border-radius:14px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font:inherit;cursor:pointer;
+  transition:border-color .15s, box-shadow .15s}
+.fila-item:hover{border-color:var(--line-strong);box-shadow:var(--shadow-sm)}
+.fila-item:focus-visible{outline:2px solid var(--brand-500);outline-offset:2px}
+.fila-item .unha{grid-area:unha;margin-bottom:10px}
+.fila-hora{grid-area:hora;font-family:var(--display);font-weight:700;font-size:16px;
+  font-variant-numeric:tabular-nums;letter-spacing:-.01em;align-self:end;white-space:nowrap}
+.fila-hora em{font-style:normal;font-family:var(--font);font-size:11.5px;font-weight:700;
+  color:var(--brand-600);margin-left:6px;letter-spacing:0}
+.fila-hora em.ok{color:var(--muted);font-weight:600}
+.fila-nome{grid-area:nome;font-weight:700;font-size:14px;align-self:start;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fila-serv{grid-area:serv;font-size:12.5px;color:var(--ink-2);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fila-cor{grid-area:cor;font-size:12px;color:var(--muted);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fila-item.proxima{border-color:var(--brand-500);box-shadow:0 0 0 1px var(--brand-500)}
+.fila-item.feito{background:var(--surface-2)}
+.fila-item.feito .fila-hora,.fila-item.feito .fila-nome{color:var(--muted)}
+.fila-vazia{grid-column:1/-1;display:flex;align-items:center;gap:14px;padding:14px 16px;
+  border:1px dashed var(--line-strong);border-radius:14px;color:var(--muted);font-size:13.5px}
+.fila-vazia b{color:var(--ink-2)}
+
+/* A unha: ponta arredondada em cima, cutícula em baixo, brilho de
+   esmalte na diagonal. A cor vem de --c. */
+.unha{--c:var(--line-strong);display:block;flex:none;width:28px;height:38px;
+  border-radius:50% 50% 42% 42% / 58% 58% 42% 42%;
+  background:
+    linear-gradient(115deg,transparent 30%,rgba(255,255,255,.5) 38%,rgba(255,255,255,0) 50%),
+    radial-gradient(120% 55% at 50% 105%,rgba(0,0,0,.26),transparent 70%),
+    var(--c);
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.1), 0 1px 2px rgba(60,20,35,.18)}
+.unha.vazia{background:transparent;box-shadow:none;border:1.5px dashed var(--line-strong)}
+
+/* O mesmo brilho nos quadradinhos de cor do resto do sistema. Fica num
+   pseudo-elemento porque a cor chega por style="background:..." inline,
+   que apagaria um background-image. */
+.swatch{position:relative}
+.swatch::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.4) 38%,rgba(255,255,255,0) 50%)}
+
+/* Painel mais calmo: logo sem degradê, nome da seção sem ícone-tile */
+.brand .logo{background:var(--brand-500);box-shadow:none}
+
+@media (max-width:640px){
+  .hoje{gap:14px}
+  .hoje-data{font-size:24px!important}
+  .hoje-acoes{width:100%}
+  .hoje-acoes .btn{flex:1;padding:0 10px}
+  /* No celular a fila rola de lado, com encaixe, em vez de empilhar */
+  .fila{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:8px;
+    margin:0 -16px;padding:2px 16px 6px;scrollbar-width:none;scroll-padding:0 16px}
+  .fila::-webkit-scrollbar{display:none}
+  .fila > li{flex:0 0 138px;scroll-snap-align:start}
+  .fila > .fila-vazia{flex:1 1 auto}
+}
+.fila-item{grid-template-areas:"unha hora" "unha nome" "serv serv" "cor cor" "tag tag"}
+.fila-tag{grid-area:tag;margin-top:6px;font-size:11.5px;font-weight:700;color:var(--brand-600);
+  display:inline-flex;align-items:center;gap:4px}
+.fila-tag.ok{color:var(--muted);font-weight:600}
+.fila-tag svg{width:13px;height:13px}
+.stat .delta{align-items:flex-start}
+.stat .delta svg{flex:none;margin-top:1px}
+
+/* Semana em barras lisas; o dia de hoje é a única barra na cor da marca */
+.barchart .bar{background:var(--brand-200)}
+.barchart .bar.hoje{background:var(--brand-500)}
+.barchart .bar.hoje .cap{color:var(--ink);font-weight:700}
+:root[data-theme="dark"] .barchart .bar{background:var(--brand-100)}
+:root[data-theme="dark"] .barchart .bar.hoje{background:var(--brand-500)}
+.fila-item{align-content:start}
+
+/* Login: a cartela de esmaltes, levemente inclinada como numa vitrine */
+.auth-cartela{display:flex;gap:12px;margin-top:36px;flex-wrap:wrap;max-width:440px}
+.auth-cartela .unha{width:32px;height:44px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.14), 0 6px 14px rgba(0,0,0,.28)}
+.auth-cartela .unha:nth-child(odd){transform:translateY(6px)}
+
+/* No escuro o berry vira rosa claro: texto branco em cima dele ficava com
+   contraste 2,3:1. Texto escuro dá mais de 7:1. */
+:root[data-theme="dark"] .btn-primary{color:#2a0a16}
+:root[data-theme="dark"] .btn-primary:hover{background:var(--brand-300);color:#2a0a16}
+:root[data-theme="dark"]{--danger:#fb7185}
+:root[data-theme="dark"] .delta.up{color:var(--accent)}
+
+/* ===== Acabamento (polish) ====================================== */
+
+/* No desktop o título da página já está no h1 logo abaixo e o item ativo
+   na barra lateral: repetir na barra do topo era ruído. */
+@media (min-width:1025px){ .topbar .page-title{display:none} }
+
+/* A cor do esmalte também na agenda: unha pequena no canto do horário */
+.appt .a-unha{position:absolute;top:6px;right:6px;width:9px;height:12px;
+  box-shadow:0 0 0 1px rgba(255,255,255,.55), inset 0 0 0 1px rgba(0,0,0,.12)}
+.appt:has(.a-unha) .a-cli{padding-right:12px}
+.day-appt{align-items:center}
+.day-appt > .unha{width:18px;height:25px;flex:none}
+
+/* Lista de clientes: última cor como linha legível */
+.cor-linha{display:inline-flex;align-items:center;gap:8px;font-size:13px;white-space:nowrap}
+.cor-linha .unha{width:12px;height:17px}
+.cli-busca{flex:1;max-width:360px;min-width:0}
+
+/* Retornos: a unha no lugar do quadrado de cor */
+.work-thumb > .unha{width:22px;height:30px}
+
+@media (max-width:640px){
+  .cli-bar .cli-busca{flex:1 1 100%;max-width:none}
+  .cli-bar .grow{display:none}
+  .cli-bar .btn{flex:1}
+
+  /* Tabelas viram cartões: a coluna-título em cima, ações no canto,
+     e cada dado numa linha "rótulo — valor". Nada rola de lado. */
+  .table-wrap{overflow:visible}
+  table.tbl,.tbl tbody{display:block;width:100%}
+  .tbl thead{display:none}
+  .tbl tr{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:12px;row-gap:7px;
+    padding:14px 16px;border-bottom:1px solid var(--line)}
+  .tbl tbody tr:last-child{border-bottom:none}
+  .tbl td{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:baseline;column-gap:16px;row-gap:1px;
+    grid-column:1/-1;padding:0;border:none;min-width:0;text-align:right}
+  .tbl td > *{grid-column:2;justify-self:end}
+  .tbl td.tbl-titulo > *{justify-self:auto}
+  .tbl td::before{content:attr(data-label);flex:none;font-size:12.5px;font-weight:600;color:var(--muted);text-align:left}
+  .tbl td > *{min-width:0}
+  .tbl td.tbl-titulo{grid-column:1;grid-row:1;display:block;text-align:left;margin-bottom:3px}
+  .tbl td.tbl-acoes{grid-column:2;grid-row:1;display:block;align-self:start}
+  .tbl td.tbl-titulo::before,.tbl td.tbl-acoes::before,.tbl td[data-label=""]::before{display:none}
+  .tbl td[colspan]{display:block}
+  .tbl td[colspan]::before{display:none}
+}
+
+/* ===== Campos de senha e telefone ================================ */
+.senha-caixa{position:relative;display:block}
+.senha-caixa > .input{padding-right:46px}
+.senha-olho{position:absolute;right:4px;top:50%;transform:translateY(-50%);width:38px;height:36px;
+  display:grid;place-items:center;border:0;border-radius:8px;background:transparent;color:var(--muted);cursor:pointer}
+.senha-olho:hover{color:var(--ink);background:var(--surface-2)}
+.senha-olho:focus-visible{outline:2px solid var(--brand-500);outline-offset:1px}
+.senha-olho svg{width:18px;height:18px}
+/* O recuo à esquerda é para o ícone; sem ícone, o texto ficava solto */
+.input-group:not(:has(.ic-left)) .input{padding-left:12px}
+.input-group:has(#ca-eye) .input,.input-group:has(#toggle-pw) .input{padding-right:46px}
+.input[readonly]{background:var(--surface-2);color:var(--ink-2)}
+
+/* Ficha: acesso ao portal */
+.cd-portal{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;
+  border:1px solid var(--line);border-radius:12px}
+.cd-cor .unha{width:12px;height:17px}
+
+/* ===== Portal da cliente: entrada ================================ */
+.portal-head{padding:18px 18px 44px;padding-top:calc(18px + env(safe-area-inset-top))}
+.portal-boasvindas{max-width:560px;margin:22px auto 0;padding:0 2px}
+.portal-titulo{color:#fff;font-family:var(--display);font-weight:700;font-size:26px;letter-spacing:-.02em;line-height:1.15}
+.portal-bio{color:rgba(255,255,255,.82);font-size:14px;margin-top:6px;max-width:44ch}
+.portal-body{margin-top:-24px;min-height:0}
+.portal-form-t{font-family:var(--display);font-weight:700;font-size:18px}
+.portal-tag{opacity:.75}
+
+/* Abas do portal: sublinhado na ativa, como abas, não botões soltos */
+.portal-nav{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line)}
+.portal-nav button{display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 4px 10px;margin-bottom:-1px;
+  border:0;border-bottom:2px solid transparent;background:transparent;color:var(--muted);font:inherit;font-weight:600;font-size:12px;cursor:pointer}
+.portal-nav button:hover{color:var(--ink)}
+.portal-nav button[aria-current="page"]{color:var(--brand-600);border-bottom-color:var(--brand-500)}
+.portal-nav button:focus-visible{outline:2px solid var(--brand-500);outline-offset:-3px}
+.portal-nav svg{width:18px;height:18px}
+
+/* Início do portal */
+.portal-home{display:grid;gap:18px}
+.ph-principal,.ph-lateral{display:flex;flex-direction:column;gap:14px;min-width:0}
+.ph-titulo{font-family:var(--display);font-weight:700;font-size:18px}
+.ph-titulo-sm{font-size:14px;font-weight:700}
+.ph-bloco{display:flex;flex-direction:column;gap:10px}
+.ph-servicos{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.ph-servico{display:flex;align-items:center;gap:12px;padding:13px 14px;border:0;border-bottom:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font:inherit;text-align:left;cursor:pointer}
+.ph-servico:last-child{border-bottom:0}
+.ph-servico > span:first-child{flex:1}
+.ph-servico:hover{background:var(--surface-2)}
+.ph-servico:focus-visible{outline:2px solid var(--brand-500);outline-offset:-2px}
+.ph-servico svg{width:16px;height:16px;color:var(--muted);flex:none}
+.ph-preco{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.work-item .unha{width:34px;height:46px}
+
+/* Rodapé: quem é, Instagram e WhatsApp */
+.portal-rodape{margin-top:auto;width:100%;padding:32px 18px calc(28px + env(safe-area-inset-bottom));text-align:center;color:var(--muted);font-size:13px}
+.portal-rodape-nome{font-weight:600;color:var(--ink-2)}
+.portal-rodape-links{display:flex;justify-content:center;gap:18px;margin-top:6px}
+.portal-rodape a{color:var(--muted);display:inline-flex;align-items:center;gap:6px;text-decoration:none}
+.portal-rodape a:hover{color:var(--brand-600);text-decoration:underline}
+.portal-rodape svg{width:15px;height:15px}
+
+/* No computador: coluna mais larga, abas em linha, início em duas colunas */
+@media (min-width:900px){
+  .portal-head-inner,.portal-hello,.portal-boasvindas{max-width:760px}
+  .portal-body{max-width:760px}
+  .portal-nav button{flex-direction:row;justify-content:center;gap:8px;font-size:13.5px;padding:15px 8px 13px}
+  .portal-home:has(.ph-lateral){grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);align-items:start}
+  .portal-titulo{font-size:34px}
+}
+@media (min-width:640px){
+  .portal-head{padding:22px 24px 52px}
+  .portal-titulo{font-size:30px}
+  .portal-body{margin:-28px auto 40px}
+}
+
+/* Escuro: o vermelho de perigo é claro; texto branco em cima dele não lia */
+:root[data-theme="dark"] .btn-danger:hover{color:#2a0a16}

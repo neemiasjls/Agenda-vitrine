@@ -1,0 +1,28 @@
+{
+  // Site + API na Cloudflare; dados no Supabase (projeto "nailagenda", São Paulo).
+  //   /api/*  → worker/index.js (sessão, autorização, regras)
+  //   resto   → dist/, servido pelo binding ASSETS
+  //
+  // O Worker fala com o Supabase só pelas funções public.nailagenda_*, com a
+  // chave pública (abaixo, não é segredo) + a senha do portão, guardada
+  // como segredo: `npx wrangler secret put SUPABASE_GATEWAY_SECRET`.
+  // No banco fica só o hash dela (nailagenda.config.portao_hash).
+  "name": "nailagenda",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-09-02",
+
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application"
+  },
+
+  "vars": {
+    "SUPABASE_URL": "https://SEU-PROJETO.supabase.co",
+    "SUPABASE_PUBLISHABLE_KEY": "sb_publishable_SUA_CHAVE_PUBLICA"
+  },
+
+
+  "triggers": { "crons": ["17 4 * * *"] },
+  "observability": { "enabled": true }
+}

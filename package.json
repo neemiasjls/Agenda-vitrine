@@ -1,0 +1,22 @@
+{
+  "name": "nailagenda-agenda",
+  "version": "1.0.0",
+  "private": true,
+  "description": "nailagenda — agenda, clientes, retornos de manutenção e financeiro para nail designer",
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "dev:nuvem": "node scripts/dev-nuvem.mjs",
+    "build": "node scripts/build.mjs",
+    "deploy": "npm test && npm run build && wrangler deploy",
+    "cf:login": "wrangler login",
+    "cf:whoami": "wrangler whoami",
+    "test": "node --test tests/*.test.mjs",
+    "check": "node --test tests/*.test.mjs && node scripts/build.mjs",
+    "db:migrar": "wrangler d1 migrations apply nailagenda --remote",
+    "senha": "node scripts/redefinir-senha.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "^4.42.0"
+  }
+}
